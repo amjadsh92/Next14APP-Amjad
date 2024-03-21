@@ -1,0 +1,129 @@
+
+
+
+.main
+{
+    background:url(../../Assets/to-do-app/Images/pexels-photo-1166644.webp); 
+    min-height: 700px;
+    color:black
+}
+
+.title{
+
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+}
+.fieldset
+{
+  background:url(../../Assets/to-do-app/Images/pexels-photo-82256.webp);
+  min-width: 500px;
+  border: 10px solid #888;
+  border-right: 10px solid #666;
+  border-bottom: 10px solid #666;
+  max-width:500px;
+  padding:16px;	
+  margin-top: 20px;
+  margin-bottom:20px;
+  margin-left:auto;
+  margin-right:auto;
+  
+}
+
+.button {
+    background-color: grey;
+    border: 1px;
+    border-radius:15px;
+    color: white;
+    padding: 4px 7px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+    margin-top: auto;
+    margin-bottom:2px;
+    margin-left:2px;
+    margin-right:2px;
+    cursor: pointer;
+  }
+
+  .label {
+    color: #0a0a23;
+    font-weight: bold;
+    font-family: "Times New Roman", Times, serif;
+      
+  }
+
+  .legend{
+    background-color: grey;
+    border: 1px solid;
+    border-radius:10px;
+    font-family: "Fantasy";
+
+
+
+}
+
+.task {
+  background-color: AliceBlue; 
+  box-sizing: border-box;       
+  width: 380px;
+  height: 23px;
+  padding-top:3px;
+  padding-bottom:1px;
+  padding-left: 3px;
+  margin: 2px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold; 
+  font-size:small;
+  border:3px solid;
+  border-color: grey;
+  border-radius:50px;
+  color: black ;
+  
+}
+
+.div {
+  
+  background:url(../../Assets/to-do-app/Images/dse-large.jpg);
+  position:relative;
+  border: 5px solid rgba(0, 0, 0, 0.959);
+  padding: 40px;
+  margin: 10px;}
+
+.ul{
+  color: black;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+
+
+.div1 {
+    display: flex;
+}
+
+.largeinput {
+
+  width: 350px;
+  
+  height: 100px;
+  
+  }
+
+.hide {
+  position: absolute;
+  bottom: 10px;
+  right: 8px;
+  background-color: rgba(128, 128, 128, 0.625);
+  
+}
+  
+.button:hover{
+
+  transform: scale(1.1)
+}
+
+.hide:hover{
+
+  transform: scale(1.1)
+}
