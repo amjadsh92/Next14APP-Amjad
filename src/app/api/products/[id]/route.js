@@ -1,21 +1,19 @@
 import { NextResponse } from "next/server";
-import pool from "../../../../lib/mysql";
+const { PrismaClient } = require("@prisma/client");
 
+const prisma = new PrismaClient();
 
-export async function DELETE(request, {params}) {
+export async function DELETE(request, { params }) {
+  const id = params.id;
+  if (!id) {
+    return NextResponse.error("Missing 'id' parameter");
+  }
 
-    try { 
-        const id = params.id
-        const query = `DELETE from products Where id = ${id}`
-        const [results] = await db.execute(query)
-        console.log(results)
-        db.release()
-       
-    return NextResponse.json(results)
-} catch (error) {
-    return NextResponse.json({
-        error: error
-    }, { status: 500 })
+  const deletePost = await prisma.product.delete({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  return NextResponse.json({ success: 1, message: "Delete success" });
 }
-}
-  

@@ -1,37 +1,18 @@
 import { NextResponse } from "next/server";
-import pool from "../../../lib/mysql";
+const { PrismaClient } = require("@prisma/client");
 
-export async function GET() {
-  try {
-    const db = await pool.getConnection();
-    const query = "SELECT * FROM products";
-    const [rows] = await db.execute(query);
-    db.release();return NextResponse.json(rows);
-  } catch (error) {
-    return NextResponse.json(
-      {
-        error: error,
-      },
-      { status: 500 }
-    );
-  }
+const prisma = new PrismaClient();
+
+export async function POST(req) {
+  const data = await req.json();
+
+  const result = await prisma.product.create({
+    data: data,
+  });
+  NextResponse.json(result);
 }
 
-export async function POST(request) {
-  try {
-    const data = await request.json();
-    const db = await pool.getConnection();
-    const { name, description } = data;
-    const query = `INSERT INTO products (name, description) VALUES ('${name}', '${description}')`;
-    const [results] = await db.execute(query);
-    db.release();
-    return NextResponse.json(results);
-  } catch (error) {
-    return NextResponse.json(
-      {
-        error: error,
-      },
-      { status: 500 }
-    );
-  }
+export async function GET() {
+  const allproducts = await prisma.product.findMany();
+  return NextResponse.json(allproducts);
 }
