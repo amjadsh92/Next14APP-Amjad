@@ -10,13 +10,15 @@
   },
   "dependencies": {
     "@prisma/client": "^5.11.0",
+    "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.2",
     "next": "14.0.4",
     "promise": "^8.3.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-redux": "^9.1.0"
   },
   "devDependencies": {
     "eslint": "^8",

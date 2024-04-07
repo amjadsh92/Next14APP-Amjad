@@ -1,88 +1,97 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import Styles from "./products.module.css";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchProducts,
+  AddNewProducts,
+  deleteProducts,
+} from "../../lib/features/products/productsSlice";
 
 export default function Products() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  const submitProduct = (url, postdata) => {
-    if (loading) return loading;
-    if (error) console.log(error);
-    console.log("it is working");
-    axios
-      .post(url, postdata)
-      .then((response) => {
-        console.log("This has been posted", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        console.log(false);
-      });
-  };
-
-  const deleteProduct = (url, id) => {
-    if (loading) return loading;
-    if (error) console.log(error);
-
-    axios
-      .delete(url + `/${id}`)
-      .then((response) => {
-        console.log("This user has been deleted", response.data);
-        setProducts(products.filter((product) => product.id !== id));
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+  const dispatch = useDispatch();
+  const productStatus = useSelector((state) => state.prod.status);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get("../api/products")
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    if (productStatus === "idle") {
+      dispatch(fetchProducts());
+    }
+  }, [productStatus, dispatch]);
 
   return (
     <div className={Styles.main}>
-      <SubmitProducts productToSubmit={submitProduct} />
-      <ShowProducts products={products} productToDelete={deleteProduct} />
+      <SubmitProducts />
+      <ShowProducts />
     </div>
   );
 }
 
-function ShowProducts({ products, productToDelete }) {
+function SubmitProducts() {
+  const [productForSubmit, setProductForSubmit] = useState({
+    name: "",
+    description: "",
+  });
+
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    setProductForSubmit({
+      ...productForSubmit,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  function handleClick() {
+    dispatch(AddNewProducts(productForSubmit));
+    setProductForSubmit({ name: "", description: "" });
+  }
+
+  return (
+    <>
+      <label>
+        Name:
+        <input
+          type="text"
+          name="name"
+          value={productForSubmit.name}
+          onChange={handleChange}
+        />
+      </label>
+      <br />
+      <label>
+        description:
+        <input
+          type="text"
+          name="description"
+          value={productForSubmit.description}
+          onChange={handleChange}
+        />
+      </label>
+      <br />
+      <button type="submit" onClick={handleClick}>
+        Add Product
+      </button>
+    </>
+  );
+}
+
+function ShowProducts() {
+  const products = useSelector((state) => state.prod.products);
   return (
     <div>
       {products
         ? products.map((product) => (
-            <RenderShowProducts
-              product={product}
-              productToDelete={productToDelete}
-              key={product.id}
-            />
+            <RenderShowProducts product={product} key={product.id} />
           ))
         : console.log("undefined")}
     </div>
   );
 }
 
-function RenderShowProducts({ product, productToDelete }) {
+function RenderShowProducts({ product }) {
+  const dispatch = useDispatch();
+
   return (
     <>
       <ol>
@@ -93,62 +102,9 @@ function RenderShowProducts({ product, productToDelete }) {
       <button
         type="submit"
         value="Delete"
-        onClick={() => productToDelete("../api/products", product.id)}
+        onClick={() => dispatch(deleteProducts(product.id))}
       >
         Delete product
-      </button>
-    </>
-  );
-}
-
-function SubmitProducts({ productToSubmit }) {
-  const [name, setName] = useState("");
-  const [des, setDes] = useState("");
-
-  const product = { name: name, description: des };
-
-  const handleName = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleDescription = (event) => {
-    setDes(event.target.value);
-  };
-
-  function handleClick(url) {
-    productToSubmit(url, product);
-    setName("");
-    setDes("");
-  }
-
-  return (
-    <>
-      <lable>
-        name:
-        <input
-          type="text"
-          name="name"
-          value={product.name}
-          onChange={handleName}
-        />
-      </lable>
-      <br />
-      <lable>
-        description:
-        <input
-          type="text"
-          name="description"
-          value={product.description}
-          onChange={handleDescription}
-        />
-      </lable>
-      <br />
-      <button
-        type="submit"
-        value="Add"
-        onClick={() => handleClick("../api/products")}
-      >
-        submit product
       </button>
     </>
   );
