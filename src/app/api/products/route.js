@@ -4,9 +4,11 @@ import pool from "../../../lib/mysql";
 export async function GET() {
   try {
     const db = await pool.getConnection();
-    const query = "SELECT * FROM products";
+    const query = "SELECT * FROM products1";
     const [rows] = await db.execute(query);
-    db.release();return NextResponse.json(rows);
+    console.log("[rows]", [rows]);
+    db.release();
+    return NextResponse.json(rows);
   } catch (error) {
     return NextResponse.json(
       {
@@ -22,10 +24,12 @@ export async function POST(request) {
     const data = await request.json();
     const db = await pool.getConnection();
     const { name, description } = data;
-    const query = `INSERT INTO products (name, description) VALUES ('${name}', '${description}')`;
-    const [results] = await db.execute(query);
+    let query = `INSERT INTO products1 (name, description) VALUES ('${name}', '${description}')`;
+    db.execute(query);
+    query = "SELECT * FROM products1";
+    const results = await db.execute(query);
     db.release();
-    return NextResponse.json(results);
+    return NextResponse.json(results[0]);
   } catch (error) {
     return NextResponse.json(
       {
