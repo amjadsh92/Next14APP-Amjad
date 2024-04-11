@@ -7,15 +7,15 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [count, setCount] = useState(0);
 
   const submitProduct = (url, postdata) => {
-    if (loading) return loading;
-    if (error) console.log(error);
     console.log("it is working");
     axios
       .post(url, postdata)
-      .then((response) => {
-        console.log("This has been posted", response.data);
+      .then((res) => {
+        setCount(count + 1);
+        console.log("This has been posted", res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -46,7 +46,7 @@ export default function Products() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("../api/products")
+      .get("../api/products1")
       .then((response) => {
         setProducts(response.data);
       })
@@ -56,7 +56,7 @@ export default function Products() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [count]);
 
   return (
     <div className={Styles.main}>
@@ -93,7 +93,7 @@ function RenderShowProducts({ product, productToDelete }) {
       <button
         type="submit"
         value="Delete"
-        onClick={() => productToDelete("../api/products", product.id)}
+        onClick={() => productToDelete("../api/products1", product.id)}
       >
         Delete product
       </button>
@@ -146,7 +146,7 @@ function SubmitProducts({ productToSubmit }) {
       <button
         type="submit"
         value="Add"
-        onClick={() => handleClick("../api/products")}
+        onClick={() => handleClick("../api/products1")}
       >
         submit product
       </button>
