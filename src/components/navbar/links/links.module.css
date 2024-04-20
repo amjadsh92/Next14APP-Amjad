@@ -5,3 +5,18 @@
     gap:10px;
 
 }
+
+.container{
+
+    min-width: 10px;
+    padding:10px;
+    border-radius:20px;
+    font-weight: bold;
+    text-align:center;
+
+}
+
+.active{
+    background-color: var(--text);
+    color: var(--bg);
+}

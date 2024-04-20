@@ -1,9 +1,15 @@
 const { default: Link } = require("next/link")
-
+//import { usePathname } from "next/navigation"
 import NavLink from "./NavbarLink/NavbarLink"
 import styles from "./links.module.css"
+import { getServerSession } from 'next-auth';
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
 
-const Links = () => {
+const Links = async () => {
+
+
+    
+    const session = await getServerSession(authOptions);
     const links = [
         {title:"Homepage",
          path:"/"},
@@ -13,12 +19,7 @@ const Links = () => {
          path:"/products"},
          {title:"tic-tac-toe",
          path:"/tic-tac-toe"},
-         {title:"About",
-         path:"/about"},
-         {title:"Contact",
-         path:"/contact"},
-         {title:"Blog",
-         path:"/blog"},
+        
     ]
 
 
@@ -27,12 +28,39 @@ return(
         {links.map((link) => 
         <NavLink item={link} key={link.title} />
         )}
+
+    
+ 
     </div>
 
 
 )
 
         }
+
+
+const AuthLinks = ({session}) => { 
+    "use client"
+    const { usePathname} = require("next/navigation")
+    const pathName = usePathname()
+    
+    {session && session.user?.email ? (
+        <>
+            <Link href='/signout' className={`${styles.container} ${pathName === '/signout'  && styles.active}`} >Sign out</Link>
+            <p>
+                <b>Signed in as {session.user?.email}</b>
+            </p>
+        </>
+    ) : (
+        <>
+            <Link href='/signin' className={`${styles.container} ${pathName === '/signin'  && styles.active}`}>Sign in</Link>
+            <Link href='/signup' className={`${styles.container} ${pathName === '/signup'  && styles.active}`}>Sign up</Link>
+        </>
+    )}
+   
+
+    
+}
 
 
 

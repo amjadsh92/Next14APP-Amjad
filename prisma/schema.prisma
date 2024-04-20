@@ -46,3 +46,12 @@ model Product {
   name           String   @unique
   description    String
 }
+
+
+model UserLogin {
+  id            String @id @default(cuid())
+  email         String
+  password      String
+
+
+}
