@@ -2,14 +2,14 @@ const { default: Link } = require("next/link")
 //import { usePathname } from "next/navigation"
 import NavLink from "./NavbarLink/NavbarLink"
 import styles from "./links.module.css"
-import { getServerSession } from 'next-auth';
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
+//import { getSession } from 'next-auth';
+//import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
 
 const Links = async () => {
 
 
     
-    const session = await getServerSession(authOptions);
+    //const session = await getSession(authOptions);
     const links = [
         {title:"Homepage",
          path:"/"},
@@ -19,6 +19,8 @@ const Links = async () => {
          path:"/products"},
          {title:"tic-tac-toe",
          path:"/tic-tac-toe"},
+         {title:"SignUp",
+         path:"/signup"},
         
     ]
 
@@ -39,7 +41,11 @@ return(
         }
 
 
-const AuthLinks = ({session}) => { 
+        
+        
+        
+        
+    const AuthLinks = ({session}) => { 
     "use client"
     const { usePathname} = require("next/navigation")
     const pathName = usePathname()

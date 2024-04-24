@@ -1,9 +1,9 @@
 "use server"
 
-import prisma from "@/lib/prisma"
+import { prisma } from "@/auth"
 import bcrypt from "bcryptjs"
 
-export const signUp = async (email, password) => {
+ export const signUp = async (email, password) => {
   const user = await prisma.userLogin.findUnique({
     where: {
       email

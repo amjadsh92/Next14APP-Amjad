@@ -49,9 +49,9 @@ model Product {
 
 
 model UserLogin {
-  id            String @id @default(cuid())
-  email         String
-  password      String
+  id             String @id @default(cuid())
+  email          String @unique
+  passwordHash   String
 
 
 }

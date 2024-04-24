@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^5.11.0",
+    "@auth/prisma-adapter": "^2.0.0",
+    "@prisma/client": "^5.13.0",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
@@ -27,6 +28,6 @@
   "devDependencies": {
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
-    "prisma": "^5.11.0"
+    "prisma": "^5.13.0"
   }
 }
